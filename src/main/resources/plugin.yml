@@ -1,0 +1,7 @@
+name: WelcomeSystem
+version: '1.0'
+main: org.dople.welcomeSystem.WelcomeSystem
+api-version: '1.19'
+commands:
+  신규복귀유저보상:
+  신규복귀자격확인:
