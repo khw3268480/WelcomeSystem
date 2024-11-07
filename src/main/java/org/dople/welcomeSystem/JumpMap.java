@@ -2,6 +2,7 @@ package org.dople.welcomeSystem;
 
 import com.hj.rpgsharp.rpg.apis.rpgsharp.events.area.AreaEnterEvent;
 import com.hj.rpgsharp.rpg.apis.rpgsharp.events.skill.SkillCastEvent;
+import com.hj.rpgsharp.rpg.apis.rpgsharp.utils.CommandUtil;
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.clip.placeholderapi.PlaceholderAPIPlugin;
 import org.bukkit.Bukkit;
@@ -31,7 +32,7 @@ public class JumpMap implements Listener {
     @EventHandler
     public void onJumpMapEnter(PlayerEndParkourEvent e) {
         Player player = e.getPlayer();
-        if (e.getFallScore() >= 50) {
+        if (e.getFallScore() >= 30) {
             String name = player.getName();
             List<String> already = configInstance.getStringList("JumpMap");
             if (already.contains(name)) {
@@ -41,9 +42,8 @@ public class JumpMap implements Listener {
             already.add(name);
             configInstance.set("JumpMap", already);
             instance.saveConfig();
-            player.setOp(true);
-            player.performCommand("랜덤박스 지급 점프맵");
-            player.setOp(false);
+            CommandUtil.runCommand(player, "랜덤박스 지급 점프맵", true);
+            CommandUtil.runCommand(player, "커스텀아이템 지급 "+player.getName()+" 기타-냉기", true);
             player.sendMessage("&f◇ &f점프맵 보상을 수령했습니다!".replace("&", "§"));
         }
     }

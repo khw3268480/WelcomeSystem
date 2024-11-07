@@ -6,6 +6,8 @@ import com.binggre.versus.apis.VersusStopEvent;
 import com.binggre.versus.objcets.PlayerVersus;
 import com.binggre.versus.objcets.enums.VersusType;
 import com.hj.rpgsharp.rpg.apis.rpgsharp.events.area.AreaEnterEvent;
+import com.hj.rpgsharp.rpg.apis.rpgsharp.utils.CommandUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -36,9 +38,10 @@ public class Versus implements Listener {
             already.add(name);
             configInstance.set("Versus", already);
             instance.saveConfig();
-            winner.setOp(true);
-            winner.performCommand("커스텀아이템 지급 "+winner.getName()+" 대전코인");
-            winner.setOp(false);
+            CommandUtil.runCommand(winner, "커스텀아이템 지급 "+winner.getName()+" 대전코인", true);
+            if(Collections.frequency(already, name)==3){
+                CommandUtil.runCommand(winner, "커스텀아이템 지급 "+winner.getName()+" 기타-냉기", true);
+            }
             winner.sendMessage(("&f◇ &f대전 임무 보상을 획득했습니다! &7&o( 오늘 획득 가능한 보상 갯수: "+(3-Collections.frequency(already, name))+"개").replace("&", "§"));
         }
     }
